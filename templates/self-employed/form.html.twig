@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Проверка ИНН физического лица{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="jumbotron">
+            <h2>Проверка ИНН физического лица</h2>
+
+            {% if message is not empty %}
+                <div id="inn_validation_result" class="alert alert-info">
+                    {{ message }}
+                    {% if code != 200 %} (код ошибки {{ code }}){% endif %}
+                </div>
+            {% endif %}
+
+            {% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}, 'name': 'inn_validation'}) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
