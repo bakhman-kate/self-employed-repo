@@ -2,16 +2,16 @@
 
 namespace App\Repository;
 
-use App\Service\Cache\MemcachedService;
+use App\Service\Cache\RedisService;
 
 class TaxPayerRepository
 {
     private const STATUS_KEY = '_status';
     private const STATUS_EXPIRE_SECONDS = 24*60*60;
 
-    private MemcachedService $cacheService;
+    private RedisService $cacheService;
 
-    public function __construct(MemcachedService $cacheService)
+    public function __construct(RedisService $cacheService)
     {
         $this->cacheService = $cacheService;
     }
@@ -24,6 +24,10 @@ class TaxPayerRepository
 
     public function saveInnStatus(string $inn, array $status): bool
     {
-        return $this->cacheService->setValue($inn . self::STATUS_KEY, $status, self::STATUS_EXPIRE_SECONDS);
+        return $this->cacheService->setValue(
+            $inn . self::STATUS_KEY,
+            $status,
+            self::STATUS_EXPIRE_SECONDS
+        );
     }
 }

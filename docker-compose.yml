@@ -23,6 +23,8 @@ services:
       timeout: 3s
       retries: 3
       start_period: 30s
+    networks:
+      - app-network
 
   caddy:
     build:
@@ -36,6 +38,8 @@ services:
       MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-asdfgt.qwerty.zxcvb}
     restart: unless-stopped
     container_name: caddy
+    networks:
+      - app-network
     volumes:
       - php_socket:/var/run/php
       - caddy_data:/data
@@ -60,12 +64,10 @@ services:
       - "127.0.0.1:11211:11211"
     container_name: memcached
     command: memcached -m 1024m
-    
+
   redis:
     image: redis:4.0
     container_name: redis
-    ports:
-      - "6382:6379"
     networks:
       - app-network
 

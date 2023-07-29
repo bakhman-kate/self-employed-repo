@@ -10,17 +10,11 @@ class RedisService implements CacheInterface
 
     public function __construct()
     {
-        $this->client = new Client(
-            [
-                'scheme' => 'tcp',
-                'host'   => 'redis',
-                'port'   => 6379,
-            ],
-            [
-                'cluster' => 'redis',
-                //'connections' => extension_loaded('phpiredis') ? 'phpiredis' : 'default',
-            ]
-        );
+        $this->client = new Client([
+            'scheme' => 'tcp',
+            'host'   => 'redis',
+            'port'   => 6379,
+        ]);
     }
 
     public function getValue($key): mixed

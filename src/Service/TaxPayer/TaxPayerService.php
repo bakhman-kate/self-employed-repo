@@ -3,7 +3,7 @@
 namespace App\Service\TaxPayer;
 
 use App\Repository\TaxPayerRepository;
-use App\Service\Cache\MemcachedService;
+use App\Service\Cache\RedisService;
 use Exception;
 
 class TaxPayerService implements TaxPayerInterface
@@ -12,12 +12,12 @@ class TaxPayerService implements TaxPayerInterface
     private const STATUS_EXPIRE_SECONDS = 30; // Запрет на кол-во запросов с одного ip адреса (не чаще 2 раз в минуту)
 
     private ApiClient $apiClient;
-    private MemcachedService $cacheService;
+    private RedisService $cacheService;
     private TaxPayerRepository $repository;
 
     public function __construct(
         ApiClient $apiClient,
-        MemcachedService $cacheService,
+        RedisService $cacheService,
         TaxPayerRepository $repository
     ) {
         $this->apiClient = $apiClient;
